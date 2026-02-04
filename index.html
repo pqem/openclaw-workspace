@@ -385,31 +385,92 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                     </svg>
-                    Local System
+                    Local System & Gateway
                 </div>
 
                 <div class="command-item">
                     <div class="command-box">
-                        <code>openclaw gateway status</code>
-                        <button class="copy-btn" onclick="copy(this, 'openclaw gateway status')">📋</button>
+                        <code>openclaw doctor</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw doctor')">📋</button>
                     </div>
-                    <p class="command-desc">Estado servicio OpenClaw</p>
+                    <p class="command-desc">Diagnóstico y corrección de errores</p>
                 </div>
 
                 <div class="command-item">
                     <div class="command-box">
-                        <code>openclaw gateway restart</code>
-                        <button class="copy-btn" onclick="copy(this, 'openclaw gateway restart')">📋</button>
+                        <code>openclaw dashboard</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw dashboard')">📋</button>
                     </div>
-                    <p class="command-desc">Reiniciar servicio</p>
+                    <p class="command-desc">Abrir UI de Control en navegador</p>
                 </div>
 
                 <div class="command-item">
                     <div class="command-box">
-                        <code>git status</code>
-                        <button class="copy-btn" onclick="copy(this, 'git status')">📋</button>
+                        <code>openclaw status</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw status')">📋</button>
                     </div>
-                    <p class="command-desc">Verificar estado Repo</p>
+                    <p class="command-desc">Estado de salud de canales y sesiones</p>
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw gateway --force</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw gateway --force')">📋</button>
+                    </div>
+                    <p class="command-desc">Forzar inicio (mata procesos previos)</p>
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw logs</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw logs')">📋</button>
+                    </div>
+                    <p class="command-desc">Ver logs del gateway en tiempo real</p>
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw configure</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw configure')">📋</button>
+                    </div>
+                    <p class="command-desc">Configuración interactiva (Creds/Defaults)</p>
+                </div>
+            </div>
+
+            <!-- 5. Advanced Tools -->
+            <div class="card">
+                <div class="section-title">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    Advanced Tools
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw tui</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw tui')">📋</button>
+                    </div>
+                    <p class="command-desc">Interfaz Gráfica de Terminal (TUI)</p>
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw update</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw update')">📋</button>
+                    </div>
+                    <p class="command-desc">Actualizar CLI a la última versión</p>
+                </div>
+
+                <div class="command-item">
+                    <div class="command-box">
+                        <code>openclaw browser</code>
+                        <button class="copy-btn" onclick="copy(this, 'openclaw browser')">📋</button>
+                    </div>
+                    <p class="command-desc">Gestionar navegador dedicado (Chrome)</p>
                 </div>
             </div>
 
