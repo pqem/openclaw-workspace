@@ -31,3 +31,7 @@ Thumbs.db
 # Temporal
 temp/
 tmp/
+
+# Memory and Context
+memory/
+MEMORY.md
