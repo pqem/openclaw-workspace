@@ -1,0 +1,240 @@
+{
+  "name": "Task Automation Manager",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "scheduleTrigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true
+      },
+      "id": "getTasks",
+      "name": "Get Tasks",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        460,
+        300
+      ],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition_0",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filterPending",
+      "name": "Filter Pending Tasks",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/webhook/task-notification",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhookIn",
+      "name": "Webhook In",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        500
+      ],
+      "webhookId": "task-notifications"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "taskName",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "dueDate",
+              "value": "={{ $json.dueDate }}"
+            }
+          ]
+        }
+      },
+      "id": "setVariables",
+      "name": "Set Variables",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "={{ $json.chatId || 'YOUR_CHAT_ID' }}",
+        "text": "🔔 Tarea pendiente: {{ $json.taskName }}\nID: {{ $json.taskId }}\nVence: {{ $json.dueDate }}",
+        "additionalFields": {}
+      },
+      "id": "sendNotification",
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram_api_credential",
+          "name": "Telegram API credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filtra tareas pendientes\nconst pendingTasks = $input.all().filter(item => \n  item.json.status === 'pending'\n);\n\n// Devuelve solo las tareas pendientes\nreturn pendingTasks;"
+      },
+      "id": "codeFilter",
+      "name": "Code Filter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "resource": "item",
+        "itemId": "={{ $json.taskId }}",
+        "updateFields": {
+          "status": "notified",
+          "lastNotified": "={{ new Date().toISOString() }}"
+        }
+      },
+      "id": "updateTaskStatus",
+      "name": "Update Task Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1340,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "scheduleTrigger": {
+      "main": [
+        [
+          {
+            "node": "Get Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Tasks": {
+      "main": [
+        [
+          {
+            "node": "Filter Pending Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pending Tasks": {
+      "main": [
+        [
+          {
+            "node": "Set Variables",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Variables": {
+      "main": [
+        [
+          {
+            "node": "Send Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Notification": {
+      "main": [
+        [
+          {
+            "node": "Update Task Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "task-automation-workflow",
+  "tags": [
+    "automation",
+    "tasks",
+    "notifications",
+    "productivity"
+  ]
+}
